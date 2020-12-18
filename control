@@ -1,0 +1,31 @@
+#!/bin/sh
+
+[ -z ${alias} ] && echo ">>> Error: alias is empty." && exit 1
+[ -z ${volume} ] && echo ">>> Error: volume is empty." && exit 1
+[ -z ${backup} ] && echo ">>> Error: backup is empty." && exit 1
+
+DT=$(date +%Y-%m-%d-%H-%M-%S)
+program="docker run --rm -v ${volume}:/volume -v ${backup}:/backup ztj1993/volume-backup:latest"
+echo "datetime: ${DT}"
+
+log=/var/log/${alias}/${DT}
+mkdir -p ${log}
+echo "log directory: ${log}"
+
+suspend=${log}/suspend.sh
+recovery=${log}/recovery.sh
+
+docker ps -a --filter volume=${volume} --filter status=running --format "docker stop {{.ID}}" >${suspend}
+docker ps -a --filter volume=${volume} --filter status=running --format "docker start {{.ID}}" >${recovery}
+
+echo "stop docker container..."
+source ${suspend}
+
+echo "backup docker volume..."
+${program} backup ${alias}.${DT}
+
+echo "recovery docker volume..."
+${program} recovery ${alias}
+
+echo "start docker container..."
+source ${recovery}

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+[ -z ${1} ] && echo ">>> Error: alias is empty." && exit 1
+
+[ -f /backup/${1}.tar.gz ] && echo ">>> Error: the backup file exists." && exit 1
+
+tar -C /volume -czvf /backup/${1}.tar.gz ./
