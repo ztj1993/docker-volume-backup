@@ -7,9 +7,22 @@ services:
     image: ztj1993/volume-backup:latest
     privileged: true
     environment:
-      - alias=alias
-      - volume=/volume
+      - alias=git
+      - volume=git_volume
+      - backup=git_backup
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  batch:
+    image: ztj1993/volume-backup:latest
+    command: batch
+    privileged: true
+    environment:
       - backup=/backup
+      - batch_01=git:git_volume
+      - batch_02=mysql:mysql_volume
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 [ -z ${alias} ] && echo ">>> Error: alias is empty." && exit 1
 [ -z ${volume} ] && echo ">>> Error: volume is empty." && exit 1
 [ -z ${backup} ] && echo ">>> Error: backup is empty." && exit 1
