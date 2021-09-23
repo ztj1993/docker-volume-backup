@@ -1,0 +1,18 @@
+version: "3"
+services:
+
+  batch:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ztj1993/volume-backup:latest
+    command: batch
+    privileged: true
+    network_mode: bridge
+    environment:
+      - backup=/backup
+      - batch_02=vbt2:vbt-volume
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro

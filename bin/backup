@@ -4,4 +4,4 @@
 
 [ -f /backup/${1}.tar.gz ] && echo ">>> Error: the backup file exists." && exit 1
 
-tar -C /volume -czvf /backup/${1}.tar.gz ./
+tar -C /volume -czf /backup/${1}.tar.gz ./

@@ -2,8 +2,8 @@
 
 [ -z ${1} ] && echo ">>> Error: alias is empty." && exit 1
 
-[ ! -f /backup/${1}.tar.gz ] && echo ">>> Skip: the backup file does not exist." && exit 0
+[ ! -f /recovery/${1}.tar.gz ] && echo ">>> Skip: the recovery file does not exist." && exit 0
 
 rm -rf /volume/* /volume/..?* /volume/.[!.]*
 
-tar -C /volume -xzvf /backup/${1}.tar.gz
+tar -C /volume -xzf /backup/${1}.tar.gz
